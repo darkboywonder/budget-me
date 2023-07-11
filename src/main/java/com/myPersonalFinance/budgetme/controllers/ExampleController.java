@@ -1,4 +1,4 @@
-package com.myPersonalFinance.budgetme;
+package com.myPersonalFinance.budgetme.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

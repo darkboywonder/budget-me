@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Register</title>
+</head>
+<body class="container">
+<div id="app">
+    <header></header>
+
+    <form @submit.prevent="register">
+        <div class="form-group">
+            <label>Username</label>
+            <input v-model="registerForm.username" class="form-control" type="text">
+            <p class="error"></p>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input v-model="registerForm.password" class="form-control" type="password">
+            <p class="error"></p>
+        </div>
+        <div class="form-group">
+            <label>Verify Password</label>
+            <input v-model="registerForm.verifyPassword" class="form-control" type="password">
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Register">
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+        new Vue({
+            el: '#app',
+            data: {
+                registerForm: {
+                    username: '',
+                    password: '',
+                    verifyPassword: '',
+                },
+                registerErrors: {
+                    username: '',
+                    password: '',
+                },
+            },
+            methods: {
+                register() {
+
+                }
+            }
+        });
+    </script>
+</body>
+</html>

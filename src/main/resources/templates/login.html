@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Budget-Me: Login</title>
+</head>
+<body class="container">
+<div id="app">
+
+    <h1>Welcome to Budget-Me!</h1>
+
+        <form @submit.prevent="login">
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input v-model="loginForm.username" class="form-control" type="text">
+            <p class="error"></p>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input v-model="loginForm.password" class="form-control" type="password">
+            <p class="error"></p>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Log In" />
+    </form>
+
+    <p>Don't have an account? <a href="/register">Register for one!</a></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+        new Vue({
+            el: '#app',
+            data: {
+                loginForm: {
+                    username: '',
+                    password: '',
+                },
+                loginErrors: {
+                    username: '',
+                    password: '',
+                },
+            },
+            methods: {
+                login() {
+
+    this.loginErrors.username = '';
+    this.loginErrors.password = '';
+
+    if (this.loginForm.username.length < 4 || this.loginForm.username.length > 20) {
+      this.loginErrors.username = 'Invalid username. Must be at least 4 characters and no more than 20 characters.';
+    }
+
+
+    if (!/^(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/.test(this.loginForm.password)) {
+      this.loginErrors.password = 'Password must have at least one uppercase letter, one number, and one symbol.';
+    } else if (this.loginForm.password.length < 7 || this.loginForm.password.length > 50) {
+      this.loginErrors.password = 'Invalid password. Must be at least 7 characters and no more than 50 characters.';
+    }
+
+    if (this.loginErrors.username === '' && this.loginErrors.password === '') {
+                  }
+             }
+        }
+    });
+    </script>
+
+</body>
+</html>
+
+
