@@ -11,7 +11,31 @@
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+    <div id="app">
+
+    </div>
     <!-- built files will be auto injected -->
   </body>
 </html>
+<template>
+  <div class="expense-list">
+    <h2>Expense List</h2>
+
+    <form class="expense-form" @submit.prevent="addExpense">
+      <label>Description:</label>
+      <input class="description-input" v-model="newExpense.description" type="text" required>
+
+      <label>Amount:</label>
+      <input class="amount-input" v-model="newExpense.amount" type="number" required>
+
+      <button class="add-expense-btn" type="submit">Add Expense</button>
+    </form>
+
+    <ul class="expenses-list">
+      <li v-for="expense in expenses" :key="expense.id" class="expense-item">
+        {{ expense.description }} - ${{ expense.amount }}
+      </li>
+    </ul>
+  </div>
+</template>
+
