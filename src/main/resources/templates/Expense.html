@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Expense</title>
+</head>
+<body>
+<div class="expense-form">
+    <h2>Create Expense</h2>
+    <form @submit.prevent="submitExpense">
+        <div class="form-group">
+            <label for="due_date">Due Date:</label>
+            <input type="date" id="due_date" v-model="expense.due_date" required>
+        </div>
+        <div class="form-group">
+            <label for="is_repeated">Is Repeated:</label>
+            <input type="checkbox" id="is_repeated" v-model="expense.is_repeated">
+        </div>
+        <div class="form-group" v-if="expense.is_repeated">
+            <label for="frequency">Frequency:</label>
+            <select id="frequency" v-model="expense.frequency" required>
+                <option value="">Select Frequency</option>
+                <option value="bi-weekly">Bi-Weekly</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" v-model="expense.name" required>
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" v-model="expense.amount" required>
+        </div>
+        <div class="form-group">
+            <label for="tag">Tag:</label>
+            <input type="text" id="tag" v-model="expense.tag" required>
+        </div>
+        <div class="form-group">
+            <label for="user_id">User ID:</label>
+            <input type="text" id="user_id" v-model="expense.user_id" required>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>

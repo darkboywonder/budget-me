@@ -1,22 +1,42 @@
 <template>
-  <div>
-    <h2>Expense List</h2>
-
-    <form @submit.prevent="addExpense">
-      <label>Description:</label>
-      <input v-model="newExpense.description" type="text" required>
-
-      <label>Amount:</label>
-      <input v-model="newExpense.amount" type="number" required>
-
-      <button type="submit">Add Expense</button>
+  <div class="expense-form">
+    <h2>Create Expense</h2>
+    <form @submit.prevent="submitExpense">
+      <div class="form-group">
+        <label for="due_date">Due Date:</label>
+        <input type="date" id="due_date" v-model="expense.due_date" required>
+      </div>
+      <div class="form-group">
+        <label for="is_repeated">Is Repeated:</label>
+        <input type="checkbox" id="is_repeated" v-model="expense.is_repeated">
+      </div>
+      <div class="form-group" v-if="expense.is_repeated">
+        <label for="frequency">Frequency:</label>
+        <select id="frequency" v-model="expense.frequency" required>
+          <option value="">Select Frequency</option>
+          <option value="bi-weekly">Bi-Weekly</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" v-model="expense.name" required>
+      </div>
+      <div class="form-group">
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" v-model="expense.amount" required>
+      </div>
+      <div class="form-group">
+        <label for="tag">Tag:</label>
+        <input type="text" id="tag" v-model="expense.tag" required>
+      </div>
+      <div class="form-group">
+        <label for="user_id">User ID:</label>
+        <input type="text" id="user_id" v-model="expense.user_id" required>
+      </div>
+      <button type="submit">Submit</button>
     </form>
-
-    <ul>
-      <li v-for="expense in expenses" :key="expense.id">
-        {{ expense.description }} - ${{ expense.amount }}
-      </li>
-    </ul>
   </div>
 </template>
 
@@ -24,94 +44,63 @@
 export default {
   data() {
     return {
-      expenses: [
-        { id: 1, description: 'Groceries', amount: 50 },
-        { id: 2, description: 'Gas', amount: 30 },
-        { id: 3, description: 'Dinner', amount: 40 },
-        // Add more expense items as needed
-      ],
-      newExpense: {
-        description: '',
-        amount: ''
+      expense: {
+        due_date: '',
+        is_repeated: false,
+        frequency: '',
+        name: '',
+        amount: null,
+        tag: '',
+        user_id: ''
       }
     };
   },
-
   methods: {
-    addExpense() {
-      // Generate a unique ID for the new expense
-      const newExpenseId = Math.max(...this.expenses.map(expense => expense.id)) + 1;
+    submitExpense() {
+      // Perform any additional validation or processing here
+      // For simplicity, we'll just log the expense object
+      console.log(this.expense);
 
-      // Create a new expense object
-      const newExpense = {
-        id: newExpenseId,
-        description: this.newExpense.description,
-        amount: this.newExpense.amount
-      };
-
-      // Add the new expense to the expenses array
-      this.expenses.push(newExpense);
-
-      // Reset the newExpense object for next input
-      this.newExpense.description = '';
-      this.newExpense.amount = '';
+      // Clear the form after submission
+      this.expense.due_date = '';
+      this.expense.is_repeated = false;
+      this.expense.frequency = '';
+      this.expense.name = '';
+      this.expense.amount = null;
+      this.expense.tag = '';
+      this.expense.user_id = '';
     }
   }
 };
 </script>
+
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
+.expense-form {
+  text-align: center;
+}
 
-  div {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-  }
+.form-group {
+  margin-bottom: 20px;
+}
 
-  h2 {
-    margin-bottom: 20px;
-    text-align: center;
-  }
+label {
+  display: block;
+  font-weight: bold;
+}
 
-  form {
-    margin-bottom: 20px;
-  }
+input, select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  input[type="text"],
-  input[type="number"] {
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  button[type="submit"] {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  li {
-    margin-bottom: 5px;
-  }
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 </style>
