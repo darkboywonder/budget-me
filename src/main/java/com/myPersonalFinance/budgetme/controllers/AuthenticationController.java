@@ -6,12 +6,12 @@ import com.myPersonalFinance.budgetme.models.dto.LoginFormDTO;
 import com.myPersonalFinance.budgetme.models.dto.RegisterFormDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,6 +45,7 @@ public class AuthenticationController {
 
         session.setAttribute(userSessionKey, user.getId());
     }
+
     @GetMapping("/register")
     public String displayRegistrationForm(Model model) {
 
@@ -138,3 +139,48 @@ public class AuthenticationController {
     }
 
 }
+
+//@RestController
+//@RequestMapping("/api/auth")
+//public class AuthenticationController {
+//
+//    @Autowired
+//    private UserRepository userRepository;
+//
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody LoginFormDTO loginFormDTO) {
+//        User user = userRepository.findByUsername(loginFormDTO.getUsername());
+//
+//        if (user == null || !user.isMatchingPassword(loginFormDTO.getPassword())) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+//        }
+//
+//        // Perform successful login logic, such as generating and returning an authentication token
+//        String authToken = generateAuthToken();
+//        return ResponseEntity.ok(authToken);
+//    }
+//
+//    @PostMapping("/register")
+//    public ResponseEntity<?> register(@RequestBody RegisterFormDTO registerFormDTO) {
+//        if (userRepository.findByUsername(registerFormDTO.getUsername()) != null) {
+//            return ResponseEntity.badRequest().body("A user with that username already exists");
+//        }
+//
+//        // Perform successful registration logic, such as creating a new user and saving it to the repository
+//        User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword());
+//        userRepository.save(newUser);
+//
+//        // Optionally, you can automatically log in the user after registration
+//        // For example, generate and return an authentication token
+//        String authToken = generateAuthToken();
+//        return ResponseEntity.ok(authToken);
+//    }
+//
+//    // Other authentication-related endpoints and methods
+//
+//    private String generateAuthToken() {
+//        // Logic to generate a secure authentication token
+//        return "dummyAuthToken";
+//    }
+//
+//}
