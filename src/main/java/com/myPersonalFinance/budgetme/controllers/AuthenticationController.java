@@ -4,8 +4,8 @@ import com.myPersonalFinance.budgetme.models.User;
 import com.myPersonalFinance.budgetme.data.UserRepository;
 import com.myPersonalFinance.budgetme.models.dto.LoginFormDTO;
 import com.myPersonalFinance.budgetme.models.dto.RegisterFormDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -82,8 +82,8 @@ public class AuthenticationController {
 
             //errors.rejectValue takes 3 parameters:
             //1. the field containing the error
-            //2. a label representing the error. This allows error messages to be imported from another file. While we don't have such a file, this parameter is required.
-            //3. A default message to use if no external error message file is available (as is the case here).
+            //2. a label representing the error. This allows error messages to be imported from another file. Even if we don't have such a file, this parameter is required.
+            //3. A default message to use if no external error message file is available
 
         }
 
@@ -114,7 +114,7 @@ public class AuthenticationController {
         User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
 
         if (theUser == null) {
-            errors.rejectValue("password", "password.invalid", "Invalid password");
+            errors.rejectValue("username", "user.invalid", "The username does not exist. Please register for an account.");
             model.addAttribute("title", "Log In");
             return "login";
         }

@@ -20,6 +20,15 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
     AuthenticationController authenticationController;
 
     private static final List<String> whitelist = Arrays.asList("/login", "/register", "/logout", "/css");
+
+    private static boolean isWhitelisted(String path) {
+        for (String pathRoot : whitelist) {
+            if (path.startsWith(pathRoot)) {
+                return true;
+            }
+        }
+        return false;
+    }
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
@@ -44,12 +53,5 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         return false;
     }
 
-    private static boolean isWhitelisted(String path) {
-        for (String pathRoot : whitelist) {
-            if (path.startsWith(pathRoot)) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 }

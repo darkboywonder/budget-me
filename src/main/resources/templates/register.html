@@ -1,54 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
     <title>Register</title>
+
+    <script>
+        function validateForm() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            let verifyPassword = document.getElementById("verifyPassword").value;
+            let errorContainer = document.getElementById("error-container");
+            let errorMessages = [];
+
+            if (username.trim() === "") {
+                errorMessages.push("Please enter a username.");
+            } else if (username.length < 4 || username.length > 20) {
+                errorMessages.push("Invalid username. Must be at least 4 characters and no more than 20 characters.");
+            }
+
+            if (password.trim() === "") {
+                errorMessages.push("Please enter a password.");
+            } else {
+        // Regular expression pattern for at least one uppercase letter, one number, and one symbol
+        let passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/;
+                if (!passwordPattern.test(password)) {
+                    errorMessages.push("Password must have at least one uppercase letter, one number, and one symbol.");
+                } else if (password.length < 7 || password.length > 50) {
+                    errorMessages.push("Invalid password. Must be at least 7 characters and no more than 50 characters.");
+                    }
+                }
+
+            if (verifyPassword.trim() === "") {
+                errorMessages.push("Please enter the verification password.");
+            } else if (verifyPassword !== password) {
+                errorMessages.push("The verification password does not match the password.");
+            }
+
+            if (errorMessages.length > 0) {
+                errorContainer.innerHTML = "";
+                for (let i = 0; i < errorMessages.length; i++) {
+                    let errorMessage = document.createElement("p");
+                    errorMessage.textContent = errorMessages[i];
+                    errorContainer.appendChild(errorMessage);
+                }
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
+
 <body class="container">
-<div id="app">
-    <header></header>
 
-    <form @submit.prevent="register">
-        <div class="form-group">
-            <label>Username</label>
-            <input v-model="registerForm.username" class="form-control" type="text">
-            <p class="error"></p>
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input v-model="registerForm.password" class="form-control" type="password">
-            <p class="error"></p>
-        </div>
-        <div class="form-group">
-            <label>Verify Password</label>
-            <input v-model="registerForm.verifyPassword" class="form-control" type="password">
-        </div>
-
-        <input type="submit" class="btn btn-primary" value="Register">
-    </form>
+<div class="container body-content">
+    <h1>Register for Your Account Here!</h1>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script>
-        new Vue({
-            el: '#app',
-            data: {
-                registerForm: {
-                    username: '',
-                    password: '',
-                    verifyPassword: '',
-                },
-                registerErrors: {
-                    username: '',
-                    password: '',
-                },
-            },
-            methods: {
-                register() {
+<form method="post" onsubmit="return validateForm()">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input class="form-control" name="username" id="username" />
+    </div>
 
-                }
-            }
-        });
-    </script>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input class="form-control" name="password" id="password" type="password" />
+    </div>
+
+    <div class="form-group">
+        <label for="verifyPassword">Verify Password</label>
+        <input class="form-control" name="verifyPassword" id="verifyPassword" type="password" />
+    </div>
+
+    <div id="error-container"></div>
+
+    <input type="submit" class="btn btn-primary" value="Register" />
+</form>
+
 </body>
 </html>
