@@ -35,7 +35,7 @@
         <label for="user_id">User ID:</label>
         <input type="text" id="user_id" v-model="expense.user_id" required>
       </div>
-      <button type="submit">Submit</button>
+      <button @click="submitExpense">Submit</button>
     </form>
   </div>
 </template>
@@ -62,7 +62,7 @@ export default {
       const submitExpenseRequest = {
          method: "POST",
          headers: { "Content-Type": "application/json" },
-         body: JSON.stringify(this.expense);
+         body: JSON.stringify(this.expense),
   };
       const response = await fetch("/expense/create", submitExpenseRequest);
       const data = await response.json();
@@ -102,7 +102,7 @@ input, select {
   border-radius: 4px;
 }
 
-button[type="submit"] {
+button {
   background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
