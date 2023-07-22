@@ -64,8 +64,10 @@ export default {
          headers: { "Content-Type": "application/json" },
          body: JSON.stringify(this.expense);
   };
+      const response = await fetch("/expense/create", submitExpenseRequest);
+      const data = await response.json();
       console.log(this.expense);
-
+      console.log(data);
       // Clear the form after submission
       this.expense.due_date = '';
       this.expense.is_repeated = false;
