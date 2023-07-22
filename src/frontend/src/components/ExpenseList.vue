@@ -59,6 +59,7 @@ export default {
     async submitExpense() {
       // Perform any additional validation or processing here
       // For simplicity, we'll just log the expense object
+      console.log(JSON.stringify(this.expense));
       const submitExpenseRequest = {
          method: "POST",
          headers: { "Content-Type": "application/json" },
