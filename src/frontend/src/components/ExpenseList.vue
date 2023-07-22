@@ -56,9 +56,14 @@ export default {
     };
   },
   methods: {
-    submitExpense() {
+    async submitExpense() {
       // Perform any additional validation or processing here
       // For simplicity, we'll just log the expense object
+      const submitExpenseRequest = {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(this.expense);
+  };
       console.log(this.expense);
 
       // Clear the form after submission

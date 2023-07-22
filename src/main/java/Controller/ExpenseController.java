@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Controller
+@RestController
 @RequestMapping("expense")
 public class ExpenseController {
 
@@ -18,14 +18,14 @@ public class ExpenseController {
     private ExpenseRepository expenseRepository;
 
 
-@GetMapping("create")
+@GetMapping(path = "create")
     public String displayCreateExpenseForm(Model model) {
     model.addAttribute("title", "Create Expense");
     model.addAttribute(new Expense());
     return "expense/create";
 }
 
-@PostMapping("create")
+@PostMapping(path = "create")
     public String processCreateExpenseForm(@ModelAttribute @Valid Expense newExpense, Errors errors, Model model) {
      if(errors.hasErrors()) {
          model.addAttribute("title", "Create Expense");
