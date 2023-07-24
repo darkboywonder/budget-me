@@ -42,6 +42,7 @@
 
 <script>
 export default {
+    name: "post-request-async-await",
   data() {
     return {
       expense: {

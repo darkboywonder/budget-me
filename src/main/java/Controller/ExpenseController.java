@@ -11,21 +11,21 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/expense/")
+@RequestMapping("/expense")
 public class ExpenseController {
 
 @Autowired
     private ExpenseRepository expenseRepository;
 
 
-//@GetMapping(path = "create")
-//    public String displayCreateExpenseForm(Model model) {
-//    model.addAttribute("title", "Create Expense");
-//    model.addAttribute(new Expense());
-//    return "expense/create";
-//}
+@GetMapping("/create")
+    public String displayCreateExpenseForm(Model model) {
+    model.addAttribute("title", "Create Expense");
+    model.addAttribute(new Expense());
+    return "expense/create";
+}
 
-@PostMapping(path = "create")
+@PostMapping("/create")
     public String processCreateExpenseForm(@ModelAttribute @Valid Expense newExpense, Errors errors, Model model) {
      if(errors.hasErrors()) {
          model.addAttribute("title", "Create Expense");
