@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,11 +14,15 @@ public class Expense {
         private int id;
         @NotBlank(message= "Name is required")
         private String name;
-
+        @Column
         private int amount ;
+        @Column
         private String frequency;
+        @Column
         private  boolean is_repeated;
+        @Column
         private String due_date;
+        @Column
         private String tag;
 
 

@@ -31,10 +31,6 @@
         <label for="tag">Tag:</label>
         <input type="text" id="tag" v-model="expense.tag" required>
       </div>
-      <div class="form-group">
-        <label for="user_id">User ID:</label>
-        <input type="text" id="user_id" v-model="expense.user_id" required>
-      </div>
       <button @click="submitExpense">Submit</button>
     </form>
   </div>
@@ -52,7 +48,6 @@ export default {
         name: '',
         amount: null,
         tag: '',
-        user_id: ''
       }
     };
   },

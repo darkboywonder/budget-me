@@ -13,6 +13,9 @@ java {
 
 repositories {
 	mavenCentral()
+//	maven {
+//		url "https:/mvnrepository.com/artifact/com.mysql/mysql-connector-j"
+//	}
 }
 
 dependencies {
@@ -24,6 +27,7 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
-test {
+
+tasks.named('test') {
 	useJUnitPlatform()
 }
