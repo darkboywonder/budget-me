@@ -13,9 +13,7 @@ java {
 
 repositories {
 	mavenCentral()
-//	maven {
-//		url "https:/mvnrepository.com/artifact/com.mysql/mysql-connector-j"
-//	}
+
 }
 
 dependencies {
@@ -24,6 +22,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//implementation 'org.springframework.boot:spring-boot-starter-security'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

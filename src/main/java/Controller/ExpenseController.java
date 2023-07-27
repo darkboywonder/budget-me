@@ -1,39 +1,34 @@
-package com.myPersonalFinance.budgetme.MVC.controllers;
+package Controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import data.ExpenseRepository;
 import model.Expense;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-
+@CrossOrigin
 @RestController
-@SpringBootApplication
 @RequestMapping("/expense")
 public class ExpenseController {
 
 @Autowired
-    private ExpenseRepository expenseRepository;
+private ExpenseRepository expenseRepository;
 
-
-@GetMapping("/create")
-    public String displayCreateExpenseForm(Model model) {
-    model.addAttribute("title", "Create Expense");
-    model.addAttribute(new Expense());
-    return "expense/create";
+public static class ExpenseResponseObject {
+    @JsonProperty
+    private String added;
 }
 
-@PostMapping("/create")
-    public String processCreateExpenseForm(@ModelAttribute @Valid Expense newExpense, Errors errors, Model model) {
-     if(errors.hasErrors()) {
-         model.addAttribute("title", "Create Expense");
-         return "expense/create";
-     }
-     expenseRepository.save(newExpense);
-     return "redirect:";
+//    @GetMapping("/create")
+//    public String displayCreateExpenseForm(Model model) {
+//    model.addAttribute("title", "Create Expense");
+//    model.addAttribute(new Expense());
+//    return "expense/create";
+//}
+
+    @PostMapping(path = "/create", consumes = "application/json")
+    public void processCreateExpenseForm(@RequestBody Expense expense) {
+        System.out.println(expense.getName());
+        expenseRepository.save(expense);
+
 }
 }

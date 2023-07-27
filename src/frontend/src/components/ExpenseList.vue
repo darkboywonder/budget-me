@@ -31,14 +31,13 @@
         <label for="tag">Tag:</label>
         <input type="text" id="tag" v-model="expense.tag" required>
       </div>
-      <button @click="submitExpense">Submit</button>
+      <button>Submit</button>
     </form>
   </div>
 </template>
 
 <script>
 export default {
-    name: "post-request-async-await",
   data() {
     return {
       expense: {
@@ -52,27 +51,16 @@ export default {
     };
   },
   methods: {
-    async submitExpense() {
-      // Perform any additional validation or processing here
-      // For simplicity, we'll just log the expense object
-      console.log(JSON.stringify(this.expense));
-      const submitExpenseRequest = {
-         method: "POST",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify(this.expense),
-  };
-      const response = await fetch("/expense/create", submitExpenseRequest);
-      const data = await response.json();
-      console.log(this.expense);
-      console.log(data);
-      // Clear the form after submission
-      this.expense.due_date = '';
-      this.expense.is_repeated = false;
-      this.expense.frequency = '';
-      this.expense.name = '';
-      this.expense.amount = null;
-      this.expense.tag = '';
-      this.expense.user_id = '';
+     async submitExpense() {
+         const submitExpenseRequest = {
+             method: "POST",
+             headers: { "Content-Type": "application/json" },
+             body: JSON.stringify(this.expense),
+         };
+
+         const response = await fetch("http://localhost:8080/expense/create", submitExpenseRequest);
+         const data = await response.json();
+         console.log(data);
     }
   }
 };
