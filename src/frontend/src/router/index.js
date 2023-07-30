@@ -4,6 +4,7 @@ import RegisterPage from "@/views/RegisterPage.vue"
 import TransactionsList from "@/views/TransactionsList.vue";
 import ExpenseList from "@/views/ExpenseList.vue";
 import HomePage from "@/views/HomePage.vue";
+import BudgetPeriodList from "@/views/BudgetPeriodList.vue";
 
 const routes = [
     {
@@ -32,7 +33,11 @@ const routes = [
         name: "ExpenseList",
         component: ExpenseList,
     },
-
+    {
+        path: "/budget-period",
+        name: "BudgetPeriodList",
+        component: BudgetPeriodList,
+    },
 
 
 ];
