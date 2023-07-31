@@ -3,7 +3,7 @@
   <div id="page">
     <h1>Budget Period</h1>
     <!--  Add form here from Create Expense branch-->
-    <button>Add a budget period</button>
+    <button>Create</button>
   </div>
 
 </template>
