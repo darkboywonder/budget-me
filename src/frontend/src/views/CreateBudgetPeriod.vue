@@ -189,12 +189,17 @@ export default {
          // Implement the logic to submit the form data, e.g., sending data to the server
          // For this example, we will log the form data to the console
          const budgetPeriod = {
+            startDate: this.startDate,
+            endDate: this.endDate,
+            selectedExpenses: this.selectedExpenses,
+         };
+         const requestOptions = {
             method: "POST",
             header: {"Content-Type": "application/json"},
-            body: JSON.stringify(this.budgetPeriod),
+            body: JSON.stringify(budgetPeriod),
          };
          console.log('Form data:', budgetPeriod);
-         const response = await fetch("/api/budget-period/create-budget-period", budgetPeriod);
+         const response = await fetch("/api/budget-period/create-budget-period", requestOptions);
          console.log(response);
          // Optionally, you can reset the form fields after submission
          this.selectedExpense = '';
@@ -202,7 +207,6 @@ export default {
          this.endDate = '';
          this.selectedExpenses = [];
        },
-  },
-
-};
+     },
+   };
 </script>
