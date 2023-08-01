@@ -17,6 +17,7 @@ public class BudgetPeriod {
     @Column
     private Date endDate;
 
+    public BudgetPeriod() {}
 
     public BudgetPeriod(Date startDate, Date endDate) {
         this.startDate = startDate;

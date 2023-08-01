@@ -14,13 +14,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/budget-period")
     public class BudgetPeriodController {
 
-        @Autowired
-        private BudgetPeriodRepository budgetPeriodRepository;
+    @Autowired
+    private BudgetPeriodRepository budgetPeriodRepository;
 
 
+    @PostMapping("/create-budget-period")
+    public ResponseEntity<String> setBudgetPeriod(@RequestBody BudgetPeriod budgetPeriod) {
+        budgetPeriodRepository.save(budgetPeriod);
 
-    @PostMapping("/create")
-        
+        return ResponseEntity.ok("Budget period received and saved!");
+
+
+    }
 }
 
 

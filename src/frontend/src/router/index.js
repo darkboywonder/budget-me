@@ -5,7 +5,7 @@ import TransactionsList from "@/views/TransactionsList.vue";
 import ExpenseList from "@/views/ExpenseList.vue";
 import HomePage from "@/views/HomePage.vue";
 import BudgetPeriodList from "@/views/BudgetPeriodList.vue";
-
+import CreateBudgetPeriod from "@/views/CreateBudgetPeriod.vue";
 const routes = [
     {
         path: "/",
@@ -38,7 +38,11 @@ const routes = [
         name: "BudgetPeriodList",
         component: BudgetPeriodList,
     },
-
+    {
+            path: "/create-budget-period",
+            name: "CreateBudgetPeriodList",
+            component: CreateBudgetPeriod,
+    },
 
 ];
 const router = createRouter({
