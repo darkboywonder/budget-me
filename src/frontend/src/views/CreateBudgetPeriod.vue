@@ -156,11 +156,6 @@ export default {
         // Add more expense items as needed
       ],
       selectedExpenses: [], // Store the list of selected expenses
-      formData: {
-       selectedExpenses: null,
-                 startDate: null,
-                 endDate: null,
-      }
     };
   },
   computed: {
@@ -185,28 +180,43 @@ export default {
       this.selectedExpenses = this.selectedExpenses.filter((expense) => expense.id !== expenseId);
     },
    async submitForm() {
-         // Method to handle form submission
-         // Implement the logic to submit the form data, e.g., sending data to the server
-         // For this example, we will log the form data to the console
-         const budgetPeriod = {
-            startDate: this.startDate,
-            endDate: this.endDate,
-            selectedExpenses: this.selectedExpenses,
+
+         const formData = {
+           selectedExpenses: this.selectedExpenses,
+           startDate: this.startDate,
+           endDate: this.endDate,
          };
-         const requestOptions = {
-            method: "POST",
-            header: {"Content-Type": "application/json"},
-            body: JSON.stringify(budgetPeriod),
-         };
-         console.log('Form data:', budgetPeriod);
-         const response = await fetch("/api/budget-period/create-budget-period", requestOptions);
-         console.log(response);
-         // Optionally, you can reset the form fields after submission
-         this.selectedExpense = '';
-         this.startDate = '';
-         this.endDate = '';
-         this.selectedExpenses = [];
-       },
-     },
-   };
+
+          // Create the request options with the correct headers
+               const requestOptions = {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify(formData),
+               };
+         console.log('Form data:', formData);
+
+          try {
+                 // Send the data to the backend endpoint
+                 const response = await fetch('/api/budget-period/create-budget-period', requestOptions);
+
+                 if (response.ok) {
+                   // Budget period was successfully saved in the backend
+                   this.$router.push('/success'); // Redirect to a success page or wherever you want
+                 } else {
+                   // Handle errors or show appropriate error message
+                   // You can display the error message returned by the server
+                   const errorMessage = await response.text();
+                   console.error('Error while saving', errorMessage);
+                 }
+               } catch (error) {
+                 console.error('Error while saving', error);
+                 // Show a generic error message to the user
+                 // Optionally, you can also log the error for debugging purposes
+                 // You may want to display a more user-friendly error message
+                 // based on the type of error encountered (e.g., network error or server error)
+               }
+             },
+  },
+
+};
 </script>

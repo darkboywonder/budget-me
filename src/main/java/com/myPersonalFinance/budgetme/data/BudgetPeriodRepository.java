@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
     @Repository
     public interface BudgetPeriodRepository extends JpaRepository<BudgetPeriod, Integer> {
-
-    }
+        BudgetPeriod findById(int id);
+    };
 
 
 
