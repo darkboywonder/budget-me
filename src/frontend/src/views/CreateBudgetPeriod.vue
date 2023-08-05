@@ -3,12 +3,18 @@
     <h1>Create a Budget Period</h1>
 
      <!-- Input fields for start date and end date -->
-      <div class="date-inputs">
-         <label for="start-date">Start Date:</label>
-          <input type="date" id="start-date" v-model="startDate" />
-            <label for="end-date">End Date:</label>
-            <input type="date" id="end-date" v-model="endDate" />
+      <div>
+         <label for="budget-month">Month:</label>
+            <select id="budget-month" v-model="budgetMonth">
+                 <option disabled value="">Select a month</option>
+                 <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
+               </select>
           </div>
+            <div>
+                <label for="budget-year">Budget Year:</label>
+                <input type="number" id="budget-year" v-model="budgetYear" placeholder="Enter year" />
+              </div>
+            </div>
 
     <!-- Dropdown list to select an expense -->
        <div class="expense-select">
@@ -47,7 +53,7 @@
  <!-- Submit button to submit the form -->
     <button @click="submitForm">Submit</button>
 
-  </div>
+
 
 </template>
 
@@ -147,8 +153,9 @@ export default {
  data() {
     return {
       selectedExpense: '', // Store the selected expense ID
-      startDate: '', // Store the selected start date
-      endDate: '', // Store the selected end date
+      budgetMonth: '', // Store the selected month
+      budgetYear: '', // Store the selected year
+      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       expenses: [
         { id: 1, name: 'Electric' },
         { id: 2, name: 'Rent' },
@@ -183,8 +190,8 @@ export default {
 
          const formData = {
            selectedExpenses: this.selectedExpenses,
-           startDate: this.startDate,
-           endDate: this.endDate,
+           budgetMonth: this.budgetMonth,
+           budgetYear: this.budgetYear,
          };
 
           // Create the request options with the correct headers

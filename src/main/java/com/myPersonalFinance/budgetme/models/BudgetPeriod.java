@@ -13,30 +13,34 @@ public class BudgetPeriod {
     private int id;
 
     @Column
-    private Date startDate;
+    private String month;
     @Column
-    private Date endDate;
+    private int year;
 
-    public BudgetPeriod() {}
-
-    public BudgetPeriod(Date startDate, Date endDate) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public BudgetPeriod() {
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public BudgetPeriod(String month, int year) {
+        this.month = month;
+        this.year = year;
+
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public String getMonth() {
+        return month;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public void setMonth(String month) {
+        this.month = month;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public int getYear() {
+        return year;
     }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
 }
+
