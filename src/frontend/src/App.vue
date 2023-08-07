@@ -60,9 +60,9 @@ h1 {
   }
 }
 
-html {
-  background-color: rgba(0, 153, 255, 0.25);
-}
+  html {
+    background-color: rgba(0, 153, 255, 0.25);
+  }
   body {
     font-family: Arial, sans-serif;
     margin: 0;
