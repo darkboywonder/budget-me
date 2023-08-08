@@ -7,12 +7,12 @@
 
             <div>
                 <label for="startDate">Budget Start:</label>
-                <input type="date" v-model="date" required />
+                <input type="date" v-model="startDate" required />
               </div>
 
               <div>
-                 <label for=""endDate"e>Budget End:</label>
-                 <input type="date" v-model="date" required />
+                 <label for="endDate">Budget End:</label>
+                 <input type="date" v-model="endDate" required />
               </div>
             </div>
 
@@ -26,6 +26,15 @@
          </select>
          <button @click="addExpense">Add</button>
        </div>
+         <div>
+                <label for="amount">Add an Amount:</label>
+                <input type="text" v-model="addedAmount">
+                  <option v-for="amount in expenses" :key="expense.id" :value="expense.id">
+                    {{ expense.name }}
+                  </option>
+                </select>
+                <button @click="addAmount">Add</button>
+              </div>
 
        <!-- List of selected expenses -->
        <div v-if="selectedExpenses.length > 0" class="selected-expenses">
@@ -153,8 +162,8 @@ export default {
  data() {
     return {
       selectedExpense: '', // Store the selected expense ID
-      budgetMonth: '', // Store the selected month
-      budgetYear: '', // Store the selected year
+      startDate: '', // Store the selected month
+      endDate: '', // Store the selected year
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       expenses: [
         { id: 1, name: 'Electric' },
@@ -191,8 +200,8 @@ export default {
 
          const formData = {
            selectedExpenses: this.selectedExpenses,
-           budgetMonth: this.budgetMonth,
-           budgetYear: this.budgetYear,
+           startDate: this.startDate,
+           endDate: this.endDate,
          };
 
           // Create the request options with the correct headers
