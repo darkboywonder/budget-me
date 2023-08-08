@@ -29,7 +29,8 @@
 
 
             <button>Submit</button>
-
+            <br>
+            <button><router-link to="/receipt/view">View Receipts</router-link></button>
  </form>
  </div>
 </template>
@@ -39,7 +40,7 @@
       data() {
         return {
           title: "",
-          tag: "",
+          tag: [],
           amount: "",
           date: "",
         };

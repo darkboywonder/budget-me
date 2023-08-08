@@ -1,15 +1,12 @@
 package com.myPersonalFinance.budgetme.controllers;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.myPersonalFinance.budgetme.data.ReceiptRepository;
-
 import com.myPersonalFinance.budgetme.models.Receipt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +23,6 @@ public class ReceiptController {
 //    private TagRepository tagRepository;
 
     @PostMapping(path = "/add", consumes = "application/json")
-//    @JsonDeserialize(using = LocalDateDeserializer.class)
     public ResponseEntity<String> addReceipts(@RequestBody Receipt receipt) {
 
         try {
@@ -51,7 +47,7 @@ public class ReceiptController {
 
         } else {
             Optional<Receipt> result = receiptRepository.findById(receiptId);
-
+            //storing the Optional object that is returned from the data repository when .findById is called
             if (result.isEmpty()) {
                 return ResponseEntity.notFound().build();
 
@@ -63,6 +59,24 @@ public class ReceiptController {
         }
 
     }
-
-
+//    @GetMapping("/add-tag")
+//    public ResponseEntity<String> addTagToReceipt(@RequestParam(required = false) Integer receiptId, @RequestParam(required = false) Integer tagId) {
+//        try {
+//            Optional<Receipt> receiptResult = receiptRepository.findById(receiptId);
+//            Receipt receipt = receiptResult.orElseThrow(); // Assuming receipt must exist
+//
+//            Optional<Tag> tagResult = tagRepository.findById(tagId);
+//            Tag tag = tagResult.orElseThrow(); // Assuming tag must exist
+//
+//            if (!receipt.getTags().contains(tag)) {
+//                receipt.addTag(tag);
+//                receiptRepository.save(receipt);
+//            }
+//
+//            return ResponseEntity.ok("Tag added to receipt");
+//
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while adding tag to receipt");
+//        }
+//    }
 }

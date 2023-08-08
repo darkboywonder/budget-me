@@ -5,7 +5,6 @@ import com.myPersonalFinance.budgetme.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -68,25 +67,5 @@ public class AuthenticationController {
         }
     }
 
-
-    @GetMapping("/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String username, @RequestBody User user) {
-
-        userRepository.findByUsername(username);
-
-        if (user != null) {
-            return ResponseEntity.ok(user);
-
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
-
-        request.getSession().invalidate();
-        return "redirect:/login";
-    }
 }
 
