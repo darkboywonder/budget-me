@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,13 +21,13 @@ import java.util.Optional;
 public class ReceiptController {
     @Autowired
     private ReceiptRepository receiptRepository;
+
 //    @Autowired
 //    private TagRepository tagRepository;
 
-
-    @PostMapping(path="/add", consumes = "application/json")
+    @PostMapping(path = "/add", consumes = "application/json")
 //    @JsonDeserialize(using = LocalDateDeserializer.class)
-    public ResponseEntity<String> saveReceipts(@RequestBody Receipt receipt) {
+    public ResponseEntity<String> addReceipts(@RequestBody Receipt receipt) {
 
         try {
 
@@ -38,40 +40,29 @@ public class ReceiptController {
         }
     }
 
-    @GetMapping("/{title}")
-    public ResponseEntity<Receipt> getReceiptByTitle(@PathVariable String title, @RequestBody Receipt receipt) {
-
-        receiptRepository.findByTitle(title);
-
-        if (receipt != null) {
-            return ResponseEntity.ok(receipt);
-
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
     @GetMapping("/view")
-    public ResponseEntity<Receipt> displayReceipts (@PathVariable Integer receiptId, @RequestBody Receipt receipt) {
+    public ResponseEntity<List<Receipt>> viewReceipts(@RequestParam(required = false) Integer receiptId) {
 
-        receiptRepository.findAll();
-        receiptRepository.findById(receiptId);
+        if (receiptId == null) {
 
-
-        if (receipt != null) {
-            return ResponseEntity.ok(receipt);
+           List<Receipt> allReceipts = receiptRepository.findAll();
+           return ResponseEntity.ok(allReceipts);
 
         } else {
-            return ResponseEntity.notFound().build();
+            Optional<Receipt> result = receiptRepository.findById(receiptId);
+
+            if (result.isEmpty()) {
+                return ResponseEntity.notFound().build();
+
+
+            } else {
+                Receipt receipt = result.get();
+               return ResponseEntity.ok(Arrays.asList(receipt));
+            }
         }
+
     }
-//    public ResponseEntity<Receipt> editReceipt(){
-//
-//    }
-//
-//    @GetMapping("/delete")
-//    public String displayDeleteReceipt(Model model){
-//        model.addAllAttributes("receipt", Receipt.getAll());
-//            return "receipt/delete-receipt";
-//    }
+
+
 }

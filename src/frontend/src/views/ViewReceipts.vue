@@ -4,34 +4,62 @@
 </router-view>
 <div class="container">
 
-            <h1>Your Receipts</h1>
 
+    <h1>Your Receipts</h1>
      <table>
-        <thead>
             <tr>
                 <th>Title</th>
                 <th>Tag</th>
                 <th>Amount</th>
-                <th>Date</th>
-
+                <th @click="sortBy='date'">Date</th>
             </tr>
-        </thead>
-        <tbody>
+
             <tr v-for="receipt in receipts" :key="receipt.id">
             <td>{{ receipt.title }}</td>
             <td>{{ receipt.tag }}</td>
             <td>{{ receipt.amount }}</td>
             <td>{{ receipt.date }}</td>
             </tr>
-        </tbody>
+
         </table>
+        <br>
             <button><router-link to="/receipt/add">Add</router-link></button>
-            <button>Edit</button>
-            <button>Delete</button>
+        <br>
+            <label for="logout">Delete<input type="checkbox" id="logout"></label>
+
+
 
 
  </div>
 </template>
+<style>
+  h1 {
+    text-align: center;
+    font-family:monospace;
+  }
+  th {
+    background-color: rgba(0, 153, 255, 1);;
+    color: white;
+  }
+  table, th, td {
+    border: 1px solid;
+    padding: 10px;
+
+  }
+  td {
+    text-align: center;
+  }
+  tr:nth-child(even) {
+    background-color: #D6EEEE;
+    }
+  tr {
+    border-bottom: 1px solid #ddd;
+  }
+  tr:hover {
+  background-color: rgba(102, 204, 51, 0.5);
+  }
+
+</style>
 
 <script>
 
@@ -39,39 +67,44 @@
 
       data() {
         return {
-          title: "",
-          tag: "",
-          amount: "",
-          date: "",
+          receipts: [],
+          sortBy: "date",
+          sortDirection: "asc",
         };
       },
+      mounted() {
+        this.viewReceipts();
+      },
       methods: {
-        async viewReceipt() {
-                const receipt = {
-                      title: this.title,
-                      tag: this.tag,
-                      amount: this.amount,
-                      date: this.date,
-                  };
+        async viewReceipts() {
+
             try {
                 const response = await fetch("/api/receipt/view", {
-                          method: "GET",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify(receipt),
-                        });
-                         if (response.ok) {
-                            this.$router.push('/receipt');
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                    });
 
-                         }
+                if (response.ok) {
+                    const data = await response.json();
+                    this.receipts = data;
+                    this.sortTable();
+                }
             } catch (error) {
-
-                console.error("Error posting receipt", error);
-
+                console.error("Error fetching receipts", error);
                 this.errorMessage = "Please try again";
                 }
+            },
 
-
-}
-     },
- };
+            sortTable() {
+                const order = this.sortDirection === "asc" ? 1 : -1;
+                      this.receipts.sort((a, b) => {
+                        if (this.sortBy === "date") {
+                          return new Date(a.date) - new Date(b.date) * order;
+                        } else {
+                          return a[this.sortBy].localeCompare(b[this.sortBy]) * order;
+                        }
+                });
+            },
+        },
+    };
  </script>

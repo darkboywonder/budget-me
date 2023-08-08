@@ -5,8 +5,9 @@
      <!-- Navigation -->
        <div class="container">
            <div class="nav-item"><router-link class="nav-link pr-3" to="/login">Log In</router-link></div>
-           <div class="nav-item">
-             <router-link to="/register">Register</router-link></div>
+           <div class="nav-item"><router-link to="/register">Register</router-link></div>
+           <div class="nav-item"><router-link to="/login">Logout</router-link></div>
+
 
 
        </div>
@@ -32,26 +33,27 @@
 </style>
 
 <script>
-
-
-// import Transactions from "@/views/TransactionsList.vue";
-//import Login from "@/views/LoginPage.vue";
-// import Expenses from "@/views/ExpenseList.vue";
-
-
-//import 'bootstrap'
-//import 'bootstrap/dist/css/bootstrap.min.css'
-
-
-
-
 export default {
-  name: 'App',
-  components: {
+  methods: {
+    async logout() {
+      try {
+        const response = await fetch("/api/logout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
 
+        if (response.ok) {
 
-  }
-}
+          this.$router.push("/login");
+        } else {
+          console.error("Logout failed");
+        }
+      } catch (error) {
+        console.error("Error during logout", error);
+      }
+    },
+  },
+};
 </script>
 
 
