@@ -1,6 +1,7 @@
 <template>
   <h1>Home Page</h1>
   <form @submit.prevent="setupTimers">
+  <button><router-link to="/receipt">Add a receipt here!</router-link></button>
   <button>Logout</button>
   </form>
 </template>
