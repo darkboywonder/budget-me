@@ -3,16 +3,16 @@
     <h1>Create a Budget Period</h1>
 
      <!-- Input fields for start date and end date -->
-      <div>
-         <label for="budget-month">Month:</label>
-            <select id="budget-month" v-model="budgetMonth">
-                 <option disabled value="">Select a month</option>
-                 <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
-               </select>
-          </div>
+      <div clas="date-inputs">
+
             <div>
-                <label for="budget-year">Budget Year:</label>
-                <input type="number" id="budget-year" v-model="budgetYear" placeholder="Enter year" />
+                <label for="startDate">Budget Start:</label>
+                <input type="date" v-model="date" required />
+              </div>
+
+              <div>
+                 <label for=""endDate"e>Budget End:</label>
+                 <input type="date" v-model="date" required />
               </div>
             </div>
 
@@ -53,18 +53,18 @@
  <!-- Submit button to submit the form -->
     <button @click="submitForm">Submit</button>
 
-
-
+</div>
 </template>
 
 <style>
 /* Center the content */
-div {
+.date-inputs {
   display: flex;
-  flex-direction: column;
+  gap:20px;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
+  justify-content: space-between;
+  width: 60%;
+  margin-bottom: 20px;
 }
 
 h1 {
@@ -139,7 +139,7 @@ li button:hover {
 }
 
 textarea {
-  width: 100%;
+  width: 50%;
   padding: 8px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -186,7 +186,8 @@ export default {
       // Remove the selected expense from the list of selectedExpenses
       this.selectedExpenses = this.selectedExpenses.filter((expense) => expense.id !== expenseId);
     },
-   async submitForm() {
+   async submitForm
+   () {
 
          const formData = {
            selectedExpenses: this.selectedExpenses,
@@ -195,16 +196,17 @@ export default {
          };
 
           // Create the request options with the correct headers
-               const requestOptions = {
+          try {
+               const response = await fetch('/api/budget-period/create-budget-period', {
                  method: 'POST',
                  headers: { 'Content-Type': 'application/json' },
                  body: JSON.stringify(formData),
-               };
+               });
+
          console.log('Form data:', formData);
 
-          try {
+
                  // Send the data to the backend endpoint
-                 const response = await fetch('/api/budget-period/create-budget-period', requestOptions);
 
                  if (response.ok) {
                    // Budget period was successfully saved in the backend

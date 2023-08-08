@@ -1,5 +1,7 @@
 package com.myPersonalFinance.budgetme.models;
 
+import com.myPersonalFinance.budgetme.controllers.BudgetPeriodController;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,34 +15,30 @@ public class BudgetPeriod {
     private int id;
 
     @Column
-    private String month;
+    private String startDate;
     @Column
-    private int year;
+    private String endDate;
 
     public BudgetPeriod() {
     }
-
-    public BudgetPeriod(String month, int year) {
-        this.month = month;
-        this.year = year;
-
+    public BudgetPeriod(String startDate, String endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    public String getMonth() {
-        return month;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public int getYear() {
-        return year;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
-
 }
-
