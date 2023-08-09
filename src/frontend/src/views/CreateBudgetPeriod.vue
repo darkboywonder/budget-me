@@ -3,7 +3,7 @@
     <h1>Create a Budget Period</h1>
 
      <!-- Input fields for start date and end date -->
-      <div clas="date-inputs">
+      <div class="date-inputs">
 
             <div>
                 <label for="startDate">Budget Start:</label>
@@ -26,15 +26,6 @@
          </select>
          <button @click="addExpense">Add</button>
        </div>
-         <div>
-                <label for="amount">Add an Amount:</label>
-                <input type="text" v-model="addedAmount">
-                  <option v-for="amount in expenses" :key="expense.id" :value="expense.id">
-                    {{ expense.name }}
-                  </option>
-                </select>
-                <button @click="addAmount">Add</button>
-              </div>
 
        <!-- List of selected expenses -->
        <div v-if="selectedExpenses.length > 0" class="selected-expenses">
@@ -46,7 +37,11 @@
            </li>
          </ul>
        </div>
-
+         <div class="budget-input">
+              <label for="budget-amount">Budget Amount:</label>
+              <input type="number" id="budget-amount" v-model="budgetAmount" placeholder="Enter budget amount" />
+              <button @click="addBudgetAmount">Add</button>
+         </div>
        <!-- Expenses textarea -->
        <div class="expenses-textarea">
          <label for="expenses">Expenses:</label>
@@ -88,7 +83,12 @@ h1 {
   gap: 10px;
   margin-bottom: 20px;
 }
-
+.budget-input {
+   display: flex;
+   align-items: center;
+   margin-bottom: 20px;
+   width: 50%;
+}
 label {
   font-size: 16px;
 }
@@ -158,12 +158,12 @@ textarea {
 
 <script>
 export default {
-
- data() {
-    return {
-      selectedExpense: '', // Store the selected expense ID
-      startDate: '', // Store the selected month
-      endDate: '', // Store the selected year
+    data() {
+        return {
+        budgetAmount: 0, //Store the budget amount
+        selectedExpense: '', // Store the selected expense ID
+        startDate: '', // Store the selected month
+        endDate: '', // Store the selected year
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       expenses: [
         { id: 1, name: 'Electric' },
@@ -195,13 +195,13 @@ export default {
       // Remove the selected expense from the list of selectedExpenses
       this.selectedExpenses = this.selectedExpenses.filter((expense) => expense.id !== expenseId);
     },
-   async submitForm
-   () {
 
-         const formData = {
-           selectedExpenses: this.selectedExpenses,
-           startDate: this.startDate,
-           endDate: this.endDate,
+   async submitForm() {
+      const formData = {
+        budgetAmount: this.budgetAmount,
+        selectedExpenses: this.selectedExpenses,
+        startDate: this.startDate,
+        endDate: this.endDate,
          };
 
           // Create the request options with the correct headers
@@ -228,13 +228,14 @@ export default {
                  }
                } catch (error) {
                  console.error('Error while saving', error);
+               }
+         },
+
+      },
+   }
+   </script>
+
                  // Show a generic error message to the user
                  // Optionally, you can also log the error for debugging purposes
                  // You may want to display a more user-friendly error message
-                 // based on the type of error encountered (e.g., network error or server error)
-               }
-             },
-  },
-
-};
-</script>
+                 // based on the type of error encountered (e.g., net)
