@@ -1,5 +1,5 @@
 <template>
-<Add />
+
 <router-view>
 </router-view>
 <div class="vue-template">
@@ -11,16 +11,11 @@
             </div>
             <div>
               <label for="tag">Tags:</label>
-              <ul>
-                <li>
                 <input v-model="tag" type="text" placeholder="Tag"  />
-
-                </li>
-              </ul>
             </div>
             <div>
-                <label for="total">Total:</label>
-                <input v-model="amount" type="text" placeholder="$ total" />
+                <label for="amount">Total:</label>
+                <input v-model="amount" type="text" placeholder="$ total" required />
             </div>
             <div>
               <label for="date">Date:</label>
@@ -40,7 +35,7 @@
       data() {
         return {
           title: "",
-          tag: [],
+          tag: "",
           amount: "",
           date: "",
         };
@@ -48,11 +43,24 @@
       methods: {
         async processReceipt() {
             const receipt = {
-                title: this.title,
-                tag: this.tag,
-                amount: this.amount,
-                date: this.date,
+                 title: this.title,
+                 tag: this.tag,
+                 amount: this.amount,
+                 date: this.date,
             };
+
+            if (this.title == "" && this.title == null) {
+                alert("Please fill out name")
+
+            } else if (this.amount == "" && this.amount == null) {
+                alert("Please fill out total amount")
+
+            } else if (this.date == "" && this.date == null) {
+                alert("Please fill out date")
+
+
+            } else {
+
 
             try {
                 const response = await fetch("/api/receipt/add", {
@@ -62,8 +70,10 @@
                         });
 
                         if (response.ok) {
-
                          this.$router.push('/receipt/view');
+
+                        } else {
+                         alert("Receipt add failed");
 
                         }
             } catch (error) {
@@ -72,7 +82,8 @@
 
                this.errorMessage = "Please try again";
              }
-        },
+        }
+     },
      },
  };
  </script>

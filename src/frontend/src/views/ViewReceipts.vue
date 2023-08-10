@@ -1,5 +1,4 @@
 <template>
-<ViewReceipt />
 <router-view>
 </router-view>
 <div class="container">
