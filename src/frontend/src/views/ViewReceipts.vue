@@ -7,6 +7,7 @@
     <h1>Your Receipts</h1>
      <table>
             <tr>
+                <th>Delete</th>
                 <th>Title</th>
                 <th>Tag</th>
                 <th>Amount</th>
@@ -14,6 +15,7 @@
             </tr>
 
             <tr v-for="receipt in receipts" :key="receipt.id">
+            <td><input type="checkbox" v-model="receipt.selected" @change="updateSelectedReceipts" /></td>
             <td>{{ receipt.title }}</td>
             <td>{{ receipt.tag }}</td>
             <td>{{ receipt.amount }}</td>
@@ -24,13 +26,10 @@
         <br>
             <button><router-link to="/receipt/add">Add</router-link></button>
         <br>
-            <label for="logout">Delete<input type="checkbox" id="logout"></label>
-
-
-
-
+            <button @click="deleteSelectedReceipts">Delete</button>
  </div>
 </template>
+
 <style>
   h1 {
     text-align: center;
@@ -103,6 +102,14 @@
                           return a[this.sortBy].localeCompare(b[this.sortBy]) * order;
                         }
                 });
+            },
+
+            deleteSelectedReceipts() {
+                const selectedReceipts = this.receipts.filter(receipt => receipt.selected);
+                if (selectedReceipts.length === 0) {
+                return;
+                }
+                this.receipts = this.receipts.filter(receipt => !receipt.selected);
             },
         },
     };

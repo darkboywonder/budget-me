@@ -19,9 +19,6 @@ public class ReceiptController {
     @Autowired
     private ReceiptRepository receiptRepository;
 
-//    @Autowired
-//    private TagRepository tagRepository;
-
     @PostMapping(path = "/add", consumes = "application/json")
     public ResponseEntity<String> addReceipts(@RequestBody Receipt receipt) {
 
@@ -59,24 +56,42 @@ public class ReceiptController {
         }
 
     }
-//    @GetMapping("/add-tag")
-//    public ResponseEntity<String> addTagToReceipt(@RequestParam(required = false) Integer receiptId, @RequestParam(required = false) Integer tagId) {
+
+    @PostMapping(path = "/view", consumes = "application/json")
+    public ResponseEntity<String> deleteReceipt(@RequestBody Integer id) {
+        try {
+            Optional<Receipt> receiptOptional = receiptRepository.findById(id);
+            if (receiptOptional.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            Receipt receipt = receiptOptional.get();
+            receiptRepository.delete(receipt);
+            receiptRepository.deleteById(id);
+
+            return ResponseEntity.ok("Receipt deleted");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while deleting receipt");
+        }
+
+
+
+
 //        try {
-//            Optional<Receipt> receiptResult = receiptRepository.findById(receiptId);
-//            Receipt receipt = receiptResult.orElseThrow(); // Assuming receipt must exist
 //
-//            Optional<Tag> tagResult = tagRepository.findById(tagId);
-//            Tag tag = tagResult.orElseThrow(); // Assuming tag must exist
-//
-//            if (!receipt.getTags().contains(tag)) {
-//                receipt.addTag(tag);
-//                receiptRepository.save(receipt);
+//            Optional<Receipt> receiptOptional = receiptRepository.findById(id);
+//            if (receiptOptional.isEmpty()) {
+//                return ResponseEntity.notFound().build();
 //            }
 //
-//            return ResponseEntity.ok("Tag added to receipt");
+//            Receipt receipt = receiptOptional.get();
+//            receiptRepository.delete(receipt);
 //
+//
+//            return ResponseEntity.ok("Receipt deleted");
 //        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while adding tag to receipt");
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while deleting receipt");
 //        }
-//    }
+    }
 }
