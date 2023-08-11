@@ -18,14 +18,15 @@ public class BudgetPeriod {
     private String endDate;
 
     @Column
-    private double budgetAmount;
+    private double totalBudget;
 
     public BudgetPeriod() {
     }
-    public BudgetPeriod(String startDate, String endDate, double budgetAmount) {
+    public BudgetPeriod(String startDate, String endDate, double totalBudget) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.budgetAmount = budgetAmount;
+        this.totalBudget = totalBudget;
+
     }
 
     public String getStartDate() {
@@ -44,11 +45,14 @@ public class BudgetPeriod {
         this.endDate = endDate;
     }
 
-    public double getBudgetAmount() {
-        return budgetAmount;
+    public double getTotalBudget() {
+        return totalBudget;
     }
 
-    public void setBudgetAmount(double budgetAmount) {
-        this.budgetAmount = budgetAmount;
+    public void setTotalBudget(double totalBudget) {
+        this.totalBudget = totalBudget;
     }
+
+
+
 }

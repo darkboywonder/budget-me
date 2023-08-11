@@ -34,14 +34,14 @@ const routes = [
         component: ExpenseList,
     },
     {
-        path: "/budget-period",
+        path: "/budget-period-list",
         name: "BudgetPeriodList",
         component: BudgetPeriodList,
     },
     {
-            path: "/create-budget-period",
-            name: "CreateBudgetPeriodList",
-            component: CreateBudgetPeriod,
+        path: "/create-budget-period",
+        name: "CreateBudgetPeriodList",
+        component: CreateBudgetPeriod,
     },
 
 ];

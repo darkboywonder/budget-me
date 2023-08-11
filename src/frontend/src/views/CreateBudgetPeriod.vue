@@ -23,9 +23,35 @@
            <option v-for="expense in expenses" :key="expense.id" :value="expense.id">
              {{ expense.name }}
            </option>
-         </select>
-         <button @click="addExpense">Add</button>
+         </select><br>
+            <label for="budget-amount">Budget Amount:</label>
+            <input type="text" v-model="budgetAmount" placeholder="$ Enter budget amount" required />
        </div>
+
+       <div class="expenses">
+         <table>
+                     <tr>
+                         <th>Expense</th>
+                         <th>Amount</th>
+                     </tr>
+
+
+                     <tr v-for="expense in selectedExpenses" :key="expense.id">
+                     <td>{{ expense.name }}</td>
+                     <td>{{ expense.budgetAmount }}</td>
+                     </tr>
+
+                     <div class="total-amount">
+                     <tr>
+                     <th>Total</th>
+                     <td>{{ calculateTotalBudget() }}</td>
+                    </tr>
+                     </div>
+         </table>
+       </div>
+
+       <br>
+       <button @click="addExpense">Add</button>
 
        <!-- List of selected expenses -->
        <div v-if="selectedExpenses.length > 0" class="selected-expenses">
@@ -37,27 +63,11 @@
            </li>
          </ul>
        </div>
-         <div class="budget-input">
-              <label for="budget-amount">Budget Amount:</label>
-              <input type="number" id="budget-amount" v-model="budgetAmount" placeholder="Enter budget amount" />
-              <button @click="addBudgetAmount">Add</button>
-         </div>
-       <!-- Expenses textarea -->
-       <div class="expenses-textarea">
-         <label for="expenses">Expenses:</label>
-         <textarea
-           id="expenses"
-           v-model="expensesText"
-           rows="5"
-           readonly
-         ></textarea>
+                <br>
+                <button @click="submitForm">Submit</button>
+
        </div>
 
-
- <!-- Submit button to submit the form -->
-    <button @click="submitForm">Submit</button>
-
-</div>
 </template>
 
 <style>
@@ -70,6 +80,27 @@
   width: 60%;
   margin-bottom: 20px;
 }
+th {
+    background-color: rgba(0, 153, 255, 1);;
+    color: white;
+  }
+  table, th, td {
+    border: 1px solid;
+    padding: 10px;
+
+  }
+  td {
+    text-align: center;
+  }
+  tr:nth-child(even) {
+    background-color: #D6EEEE;
+    }
+  tr {
+    border-bottom: 1px solid #ddd;
+  }
+  tr:hover {
+  background-color: rgba(102, 204, 51, 0.5);
+  }
 
 h1 {
   font-size: 24px;
@@ -129,12 +160,12 @@ li {
 /* Style the "Remove" button for each selected expense */
 li button {
   margin-left: 10px;
-  padding: 4px 8px;
+  padding: 4px 4px;
   font-size: 14px;
   background-color: #dc3545;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
@@ -142,25 +173,13 @@ li button:hover {
   background-color: #c82333;
 }
 
-/* Style the Expenses textarea */
-.expenses-textarea {
-  margin-top: 20px;
-}
-
-textarea {
-  width: 50%;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
 </style>
 
 <script>
 export default {
     data() {
         return {
-        budgetAmount: 0, //Store the budget amount
+        budgetAmount: '', //Store the budget amount
         selectedExpense: '', // Store the selected expense ID
         startDate: '', // Store the selected month
         endDate: '', // Store the selected year
@@ -172,6 +191,7 @@ export default {
         // Add more expense items as needed
       ],
       selectedExpenses: [], // Store the list of selected expenses
+      budgetAmounts: '',
     };
   },
   computed: {
@@ -186,15 +206,27 @@ export default {
       const selectedExpense = this.expenses.find((expense) => expense.id === this.selectedExpense);
       if (selectedExpense) {
         // Add the selected expense to the list of selectedExpenses
+        selectedExpense.budgetAmount = this.budgetAmount;
+
         this.selectedExpenses.push(selectedExpense);
-        // Clear the selectedExpense to reset the dropdown to its default state
         this.selectedExpense = '';
+        this.budgetAmount = '';
       }
     },
     removeExpense(expenseId) {
       // Remove the selected expense from the list of selectedExpenses
       this.selectedExpenses = this.selectedExpenses.filter((expense) => expense.id !== expenseId);
     },
+    calculateTotalBudget() {
+                      let total = 0;
+
+                      // Iterate through selectedExpenses and sum up budgetAmounts
+                      for (const expense of this.selectedExpenses) {
+                        total += parseFloat(expense.budgetAmount || 0); // handle empty or invalid values
+                      }
+
+                      return total.toFixed(2); // Return the total with 2 decimal places
+                    },
 
    async submitForm() {
       const formData = {
@@ -202,6 +234,7 @@ export default {
         selectedExpenses: this.selectedExpenses,
         startDate: this.startDate,
         endDate: this.endDate,
+        totalBudget: this.calculateTotalBudget(),
          };
 
           // Create the request options with the correct headers
@@ -219,7 +252,7 @@ export default {
 
                  if (response.ok) {
                    // Budget period was successfully saved in the backend
-                   this.$router.push('/success'); // Redirect to a success page or wherever you want
+                   this.$router.push('/budget-period-list'); // Redirect to a success page or wherever you want
                  } else {
                    // Handle errors or show appropriate error message
                    // You can display the error message returned by the server
@@ -235,7 +268,3 @@ export default {
    }
    </script>
 
-                 // Show a generic error message to the user
-                 // Optionally, you can also log the error for debugging purposes
-                 // You may want to display a more user-friendly error message
-                 // based on the type of error encountered (e.g., net)

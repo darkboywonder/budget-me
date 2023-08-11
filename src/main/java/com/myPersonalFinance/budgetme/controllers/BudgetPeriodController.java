@@ -27,22 +27,22 @@ public class BudgetPeriodController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while saving!");
         }
     }
-    @PostMapping(path = "/add-budget-amount", consumes = "application/json")
-    public ResponseEntity<String> addBudgetAmount(@RequestBody BudgetAmountRequest request) {
-        try {
-            BudgetPeriod budgetPeriod = budgetPeriodRepository.findById(request.getBudgetPeriodId(int id)).orElse(null);
-            if (budgetPeriod != null) {
-                budgetPeriod.setBudgetAmount(request.getBudgetAmount());
-                budgetPeriodRepository.save(budgetPeriod);
-                return ResponseEntity.ok("Budget amount added successfully!");
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while adding budget amount!");
-        }
-    }
-}
+//    @PostMapping(path = "/add-budget-amount", consumes = "application/json")
+//    public ResponseEntity<String> addBudgetAmount(@RequestBody BudgetPeriod budgetPeriod) {
+//        try {
+//
+//            if (budgetPeriod != null) {
+//
+//                budgetPeriodRepository.save(budgetPeriod);
+//                return ResponseEntity.ok("Budget amount added successfully!");
+//            } else {
+//                return ResponseEntity.notFound().build();
+//            }
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while adding budget amount!");
+//        }
+//    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<BudgetPeriod> getBudgetById(@PathVariable int id, @RequestBody BudgetPeriod budgetPeriod) {

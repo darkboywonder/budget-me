@@ -13,9 +13,6 @@ import org.springframework.stereotype.Repository;
     public interface BudgetPeriodRepository extends JpaRepository<BudgetPeriod, Integer> {
         BudgetPeriod findById(int id);
 
-        @Modifying
-        @Query("UPDATE BudgetPeriod b SET b.budgetAmount = :budgetAmount WHERE b.id = :id")
-        int updateBudgetAmountById(@Param("id") int id, @Param("budgetAmount") double budgetAmount);
     };
 
 
