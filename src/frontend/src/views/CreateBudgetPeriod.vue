@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>Create a Budget Period</h1>
+    <h1>Create Budget Period</h1>
 
      <!-- Input fields for start date and end date -->
-      <div class="date-inputs">
+      <div class="date-input">
 
             <div>
                 <label for="startDate">Budget Start:</label>
@@ -18,7 +18,7 @@
 
     <!-- Dropdown list to select an expense -->
        <div class="expense-select">
-         <label for="expense">Select an Expense:</label>
+         <label for="expense">Select Expenses</label>
          <select id="expense" v-model="selectedExpense">
            <option v-for="expense in expenses" :key="expense.id" :value="expense.id">
              {{ expense.name }}
@@ -37,11 +37,8 @@
            </li>
          </ul>
        </div>
-         <div class="budget-input">
-              <label for="budget-amount">Budget Amount:</label>
-              <input type="number" id="budget-amount" v-model="budgetAmount" placeholder="Enter budget amount" />
-              <button @click="addBudgetAmount">Add</button>
-         </div>
+
+
        <!-- Expenses textarea -->
        <div class="expenses-textarea">
          <label for="expenses">Expenses:</label>
@@ -80,21 +77,15 @@ h1 {
 .expense-select {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   margin-bottom: 20px;
-}
-.budget-input {
-   display: flex;
-   align-items: center;
-   margin-bottom: 20px;
-   width: 50%;
 }
 label {
   font-size: 16px;
 }
 
 select {
-  padding: 8px;
+  padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -160,17 +151,11 @@ textarea {
 export default {
     data() {
         return {
-        budgetAmount: 0, //Store the budget amount
         selectedExpense: '', // Store the selected expense ID
         startDate: '', // Store the selected month
         endDate: '', // Store the selected year
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      expenses: [
-        { id: 1, name: 'Electric' },
-        { id: 2, name: 'Rent' },
-        { id: 3, name: 'Food' },
-        // Add more expense items as needed
-      ],
+      expenses: [],
       selectedExpenses: [], // Store the list of selected expenses
     };
   },
@@ -198,7 +183,6 @@ export default {
 
    async submitForm() {
       const formData = {
-        budgetAmount: this.budgetAmount,
         selectedExpenses: this.selectedExpenses,
         startDate: this.startDate,
         endDate: this.endDate,
@@ -206,7 +190,7 @@ export default {
 
           // Create the request options with the correct headers
           try {
-               const response = await fetch('/api/budget-period/create-budget-period', {
+               const response = await fetch('/api/budget-period-list/create-budget-period', {
                  method: 'POST',
                  headers: { 'Content-Type': 'application/json' },
                  body: JSON.stringify(formData),
@@ -219,7 +203,7 @@ export default {
 
                  if (response.ok) {
                    // Budget period was successfully saved in the backend
-                   this.$router.push('/success'); // Redirect to a success page or wherever you want
+                   this.$router.push('/budget-period-list'); // Redirect to a success page or wherever you want
                  } else {
                    // Handle errors or show appropriate error message
                    // You can display the error message returned by the server
