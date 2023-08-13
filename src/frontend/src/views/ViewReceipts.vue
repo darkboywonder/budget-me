@@ -11,7 +11,7 @@
                 <th>Title</th>
                 <th>Tag</th>
                 <th>Amount</th>
-                <th @click="sortBy='date'">Date</th>
+                <th>Date</th>
             </tr>
 
             <tr v-for="receipt in receipts" :key="receipt.id">
@@ -84,7 +84,7 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    this.receipts = data;
+                    this.receipts = data.map(receipt => ({ ...receipt, selected: false }));
                     this.sortTable();
                 }
             } catch (error) {
@@ -107,10 +107,32 @@
             deleteSelectedReceipts() {
                 const selectedReceipts = this.receipts.filter(receipt => receipt.selected);
                 if (selectedReceipts.length === 0) {
-                return;
+                    return;
                 }
-                this.receipts = this.receipts.filter(receipt => !receipt.selected);
-            },
+
+                const selectedIds = selectedReceipts.map(receipt => receipt.id);
+
+                fetch("/api/receipt/delete", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(selectedIds)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("Error deleting receipts");
+                    }
+                })
+                .then(updatedReceipts => {
+                    this.receipts = updatedReceipts;
+                })
+                .catch(error => {
+                    console.error("Error deleting receipts", error);
+                    this.errorMessage = "Please try again";
+                });
+            }
+
         },
     };
  </script>

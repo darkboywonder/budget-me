@@ -14,7 +14,7 @@ public class Receipt {
     private String title;
 
     @Column
-    private int amount;
+    private double amount;
     @Column
     private String date;
     @Column
@@ -24,7 +24,7 @@ public class Receipt {
 
 
     public Receipt(){};
-    public Receipt(String title, String tag, int amount, String date) {
+    public Receipt(String title, String tag, double amount, String date) {
         this.title = title;
         this.tag = tag;
         this.amount = amount;
@@ -51,11 +51,11 @@ public class Receipt {
         this.date = date;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

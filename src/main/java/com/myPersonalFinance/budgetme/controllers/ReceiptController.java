@@ -57,41 +57,20 @@ public class ReceiptController {
 
     }
 
-    @PostMapping(path = "/view", consumes = "application/json")
-    public ResponseEntity<String> deleteReceipt(@RequestBody Integer id) {
+    @PostMapping("/delete")
+    public ResponseEntity<List<Receipt>> deleteReceipts(@RequestBody List<Integer> receiptIds) {
         try {
-            Optional<Receipt> receiptOptional = receiptRepository.findById(id);
-            if (receiptOptional.isEmpty()) {
-                return ResponseEntity.notFound().build();
+            for (Integer receiptId : receiptIds) {
+                receiptRepository.deleteById(receiptId);
             }
 
-            Receipt receipt = receiptOptional.get();
-            receiptRepository.delete(receipt);
-            receiptRepository.deleteById(id);
-
-            return ResponseEntity.ok("Receipt deleted");
-
+            List<Receipt> updatedReceipts = receiptRepository.findAll();
+            return ResponseEntity.ok(updatedReceipts);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while deleting receipt");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-
-
-
-
-//        try {
-//
-//            Optional<Receipt> receiptOptional = receiptRepository.findById(id);
-//            if (receiptOptional.isEmpty()) {
-//                return ResponseEntity.notFound().build();
-//            }
-//
-//            Receipt receipt = receiptOptional.get();
-//            receiptRepository.delete(receipt);
-//
-//
-//            return ResponseEntity.ok("Receipt deleted");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while deleting receipt");
-//        }
     }
+
+
+
 }
