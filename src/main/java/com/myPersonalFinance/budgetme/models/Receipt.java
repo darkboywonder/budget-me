@@ -18,15 +18,15 @@ public class Receipt {
     @Column
     private String date;
     @Column
-    private String tag;
+    private String category;
 
 
 
 
     public Receipt(){};
-    public Receipt(String title, String tag, double amount, String date) {
+    public Receipt(String title, String category, double amount, String date) {
         this.title = title;
-        this.tag = tag;
+        this.category = category;
         this.amount = amount;
         this.date = date;
     }
@@ -59,11 +59,11 @@ public class Receipt {
         this.amount = amount;
     }
 
-    public String getTag() {
-        return tag;
+    public String getCategory() {
+        return category;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

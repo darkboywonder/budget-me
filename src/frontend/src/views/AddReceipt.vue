@@ -10,8 +10,8 @@
               <input v-model="title" type="text" placeholder="Name" required />
             </div>
             <div>
-              <label for="tag">Tags:</label>
-                <input v-model="tag" type="text" placeholder="Tag"  />
+              <label for="category">Category:</label>
+                <input v-model="category" type="text" placeholder="Category"  />
             </div>
             <div>
                 <label for="amount">Total:</label>
@@ -35,7 +35,7 @@
       data() {
         return {
           title: "",
-          tag: "",
+          category: "",
           amount: "",
           date: "",
         };
@@ -44,7 +44,7 @@
         async processReceipt() {
             const receipt = {
                  title: this.title,
-                 tag: this.tag,
+                 category: this.category,
                  amount: this.amount,
                  date: this.date,
             };

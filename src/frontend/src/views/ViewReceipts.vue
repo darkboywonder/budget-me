@@ -4,33 +4,79 @@
 <div class="container">
 
 
-    <h1>Your Receipts</h1>
+    <h1>My Receipts</h1>
+    <div class="table-container">
      <table>
             <tr>
-                <th>Delete</th>
+                <th class="deleteBox">Delete</th>
                 <th>Title</th>
-                <th>Tag</th>
+                <th>Category</th>
                 <th>Amount</th>
                 <th>Date</th>
             </tr>
 
             <tr v-for="receipt in receipts" :key="receipt.id">
-            <td><input type="checkbox" v-model="receipt.selected" @change="updateSelectedReceipts" /></td>
+            <td><input type="checkbox" v-model="receipt.selected"></td>
             <td>{{ receipt.title }}</td>
-            <td>{{ receipt.tag }}</td>
+            <td>{{ receipt.category }}</td>
             <td>{{ receipt.amount }}</td>
             <td>{{ receipt.date }}</td>
             </tr>
 
         </table>
+        </div>
         <br>
-            <button><router-link to="/receipt/add">Add</router-link></button>
+            <button class="addButton"><router-link to="/receipt/add">Add</router-link></button>
         <br>
-            <button @click="deleteSelectedReceipts">Delete</button>
+            <button class="deleteButton" @click="deleteSelectedReceipts">Delete</button>
  </div>
 </template>
 
 <style>
+
+  table {
+    border: 1px solid;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .table-container {
+    display: flex;
+    justify-content: center;
+  }
+  .addButton button {
+       width: 100%;
+       margin: auto;
+       padding: 10px;
+       background-color: #4caf50;
+       color: white;
+       border: none;
+       border-radius: 4px;
+       cursor: pointer;
+       font-size: 16px;
+       text-decoration: none;
+        }
+   button {
+      display: block;
+      width: 100%;
+      margin: auto;
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      text-decoration: none;
+    }
+  .deleteBox {
+    color: maroon;
+  }
+  .deleteButton {
+    color: maroon;
+
+  }
   h1 {
     text-align: center;
     font-family:monospace;
@@ -39,10 +85,11 @@
     background-color: rgba(0, 153, 255, 1);;
     color: white;
   }
-  table, th, td {
+  th, td {
     border: 1px solid;
     padding: 10px;
-
+    margin-left: auto;
+    margin-right: auto;
   }
   td {
     text-align: center;
