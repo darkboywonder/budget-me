@@ -70,7 +70,10 @@ public class ReceiptController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
-
+    @GetMapping("/search")
+    public ResponseEntity<List<Receipt>> searchReceiptsByTag(@RequestParam String tag) {
+        List<Receipt> matchingReceipts = receiptRepository.findByCategoryContaining(tag);
+        return ResponseEntity.ok(matchingReceipts);
+    }
 
 }

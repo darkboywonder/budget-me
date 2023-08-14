@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginPage from "@/views/LoginPage.vue";
 import RegisterPage from "@/views/RegisterPage.vue"
-import TransactionsList from "@/views/TransactionsList.vue";
-import ExpenseList from "@/views/ExpenseList.vue";
 import HomePage from "@/views/HomePage.vue";
 import AddReceipt from "@/views/AddReceipt.vue";
-import ViewReceipts from "@/views/ViewReceipts.vue"
+import ViewReceipts from "@/views/ViewReceipts.vue";
 
 
 
@@ -27,16 +25,6 @@ const routes = [
          path: "/home",
          name: "HomePage",
          component: HomePage,
-    },
-    {
-        path: "/transactions",
-        name: "TransactionsList",
-        component: TransactionsList,
-    },
-    {
-        path: "/expenses",
-        name: "ExpenseList",
-        component: ExpenseList,
     },
     {
         path: "/receipt/add",

@@ -3,6 +3,12 @@
 </router-view>
 <div class="container">
 
+<div class="search-container">
+  <input type="text" v-model="searchTag" placeholder="Search by Category">
+  <button @click="searchByTag">Search</button>
+  <br>
+  <button @click="clearSearch">Clear Search</button>
+</div>
 
     <h1>My Receipts</h1>
     <div class="table-container">
@@ -18,7 +24,11 @@
             <tr v-for="receipt in receipts" :key="receipt.id">
             <td><input type="checkbox" v-model="receipt.selected"></td>
             <td>{{ receipt.title }}</td>
-            <td>{{ receipt.category }}</td>
+            <td>
+                <div class="tag-container">
+                    <span v-for="tag in receipt.tags" :key="tag" class="tag">{{ tag }}</span>
+                </div>
+            </td>
             <td>{{ receipt.amount }}</td>
             <td>{{ receipt.date }}</td>
             </tr>
@@ -34,6 +44,16 @@
 
 <style>
 
+  .tag-container {
+      flex-wrap: wrap;
+    }
+  .tag {
+      margin-right: 4px;
+      padding: 2px 4px;
+      background-color: #3490dc;
+      color: black;
+      border-radius: 4px;
+    }
   table {
     border: 1px solid;
     padding: 10px;
@@ -109,12 +129,12 @@
 <script>
 
  export default {
-
       data() {
         return {
           receipts: [],
           sortBy: "date",
           sortDirection: "asc",
+          searchTag: "",
         };
       },
       mounted() {
@@ -131,7 +151,10 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    this.receipts = data.map(receipt => ({ ...receipt, selected: false }));
+                    this.receipts = data.map(receipt => ({
+                    ...receipt, selected: false,
+                     tags: receipt.category.split(",").map(tag => tag.trim()), /*this splits categories into tags */
+                     }));
                     this.sortTable();
                 }
             } catch (error) {
@@ -150,13 +173,38 @@
                         }
                 });
             },
+            async searchByTag() {
+                if (this.searchTag) {
+                try {
+                const response = await fetch(`/api/receipt/search?tag=${this.searchTag}`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+            });
+            if (response.ok) {
+                    const data = await response.json();
+                    this.receipts = data.map(receipt => ({
+                    ...receipt,
+                          selected: false,
+                          tags: receipt.category.split(',').map(tag => tag.trim()),
+                        }));
+                      } else {
+                        console.error("Error searching receipts by tag");
+                      }
+                    } catch (error) {
+                      console.error("Error searching receipts by tag", error);
+                        }
+                      }
+                    },
+            clearSearch() {
+                    this.searchTag = "";
+                    this.viewReceipts(); //Fetch and display all receipts again
+                    },
 
             deleteSelectedReceipts() {
                 const selectedReceipts = this.receipts.filter(receipt => receipt.selected);
                 if (selectedReceipts.length === 0) {
                     return;
                 }
-
                 const selectedIds = selectedReceipts.map(receipt => receipt.id);
 
                 fetch("/api/receipt/delete", {
