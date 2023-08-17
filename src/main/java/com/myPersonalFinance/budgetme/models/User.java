@@ -16,21 +16,10 @@ public class User {
     @Column
     private String password;
 
-    private String accessToken;
-
 
     public User(){
     };
 
-    public String getAccessToken() {
-
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-
-        this.accessToken = accessToken;
-    }
 
     public User(String username, String password) {
         this.username = username;
