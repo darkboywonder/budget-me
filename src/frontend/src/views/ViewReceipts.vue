@@ -43,7 +43,6 @@
 </template>
 
 <style>
-
   .tag-container {
       flex-wrap: wrap;
     }
