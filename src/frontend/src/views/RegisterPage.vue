@@ -1,9 +1,7 @@
 <template>
 
   <router-view></router-view>
-  <div class="bg"></div>
-  <div class="bg bg2"></div>
-  <div class="bg bg3"></div>
+<div id="page">
  <div class="page"></div>
 
       <form @submit.prevent="registerUser">
@@ -24,7 +22,11 @@
           <p class="error" v-if="verifyError">{{ verifyError }}</p>
         </div>
         <button type="submit">Sign Up</button>
+        <p>
+           <router-link to="/login">Already have an account? Login Here!</router-link>
+        </p>
       </form>
+      </div>
     </template>
 
 

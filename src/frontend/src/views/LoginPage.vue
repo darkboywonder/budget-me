@@ -1,12 +1,6 @@
 <template>
- <Login />
-  <router-view>
-  </router-view>
-  <div class="bg"></div>
-  <div class="bg bg2"></div>
-  <div class="bg bg3"></div>
-  <div class="page"></div>
-  <div class="vue-template">
+  <router-view></router-view>
+  <div id="page">
 
         <form @submit.prevent="loginUser">
             <h1>Login</h1>
@@ -28,6 +22,7 @@
 
         </form>
     </div>
+
 </template>
 
 <style>
