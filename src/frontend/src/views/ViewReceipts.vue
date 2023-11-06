@@ -25,15 +25,52 @@
 
             <tr v-for="receipt in receipts" :key="receipt.id">
             <td><input type="checkbox" v-model="receipt.selected"></td>
-            <td>{{ receipt.title }}</td>
             <td>
-                <div class="tag-container">
-                    <span v-for="tag in receipt.tags" :key="tag" class="tag">{{ tag }}</span>
+                <div v-if=!receipt.isEdit>
+                    {{ receipt.title }}
+                </div>
+                <div v-if=receipt.isEdit>
+                    <input type="text" v-model="receipt.title" required>
                 </div>
             </td>
-            <td>{{ receipt.amount }}</td>
-            <td>{{ receipt.date }}</td>
-            </tr>
+            <td>
+                <div class="tag-container">
+                 <span v-for="tag in receipt.tags" :key="tag" class="tag">{{ tag }}</span>
+                 <div v-if=!receipt.isEdit>
+                     {{ receipt.tag }}
+                 </div>
+                 <div v-if=receipt.isEdit>
+                      <input type="text" v-model="receipt.category" required>
+                 </div>
+                 </div>
+            </td>
+
+            <td>
+            <div v-if=!receipt.isEdit>
+                  ${{ parseFloat(receipt.amount).toFixed(2) }}
+            </div>
+            <div v-if=receipt.isEdit>
+                   <input type="number" min="0.00" step="0.01" v-model="receipt.amount" required>
+            </div>
+            </td>
+            <td>
+            <div v-if=!receipt.isEdit>
+                    {{ receipt.date }}
+            </div>
+            <div v-if=receipt.isEdit>
+                     <input type="date" id="date" v-model="receipt.date" required>
+            </div>
+            </td>
+            <td>
+                <div v-if=!receipt.isEdit>
+                    <button @click="onEdit(receipt)">Edit</button>
+                </div>
+                <div v-if=receipt.isEdit>
+                     <button @click="updateReceipt(receipt)">Save</button>
+                </div>
+            </td>
+         </tr>
+
 
         </table>
         </div>
@@ -41,6 +78,9 @@
             <button class="addButton"><router-link to="/receipt/add">Add a Receipt</router-link></button>
         <br>
             <button class="deleteButton" @click="deleteSelectedReceipts">Delete a Receipt</button>
+        <br>
+
+
  </div>
  </div>
 </template>
@@ -223,16 +263,60 @@ import TheNavigation from "@/views/TheNavigation.vue";
                 })
                 .then(updatedReceipts => {
                     this.receipts = updatedReceipts;
+                    this.viewReceipts();
+                    this.sortTable();
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.error("Error deleting receipts", error);
                     this.errorMessage = "Please try again";
                 });
-            }
+            },
+             onEdit(receipt) {
+                 this.receipts.forEach(element => {
+                    element.isEdit = false;
+                 });
+                 receipt.isEdit = true;
+                 },
 
+             async viewReceipt() {
+                  const response = await fetch("/api/receipt/view");
+
+                  this.receipt = await response.json();
+             },
+
+             async updateReceipt(receipt) {
+                if (this.receipt != "once") {
+                    this.isRepeated = true;
+                } else {
+                    this.isRepeated = false;
+                }
+
+                this.receipt = receipt;
+
+                const updateReceiptRequest = {
+                    method: "PUT",
+                    headers: { "Content-Type" : "application/json" },
+                    body: JSON.stringify(this.receipt)
+                };
+                try {
+                     const response = await fetch("/api/receipt/edit", updateReceiptRequest);
+                     if (response.ok) {
+                         this.isEdit = false;
+                         await this.viewReceipts();
+                         this.$router.push('/receipt/view')
+
+                     } else {
+                         alert("Receipt update failed.")
+                     }
+                 } catch (error) {
+                     console.error("Error occurred during receipt update.", error);
+                 }
+
+        },
         },
         components: {
             TheNavigation,
             },
+
     };
  </script>

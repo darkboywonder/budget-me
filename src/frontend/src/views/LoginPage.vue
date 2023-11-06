@@ -6,15 +6,15 @@
             <h1>Login</h1>
             <div>
               <label for="username">Username:</label>
-              <input v-model="username" type="text" placeholder="Username" required />
+              <input v-model="username" type="text" placeholder="Username" />
             </div>
             <div>
               <label for="password">Password:</label>
-              <input v-model="password" type="password" placeholder="Password" required />
+              <input v-model="password" type="password" placeholder="Password" />
             </div>
             <button type="submit">Login</button>
 
-            <p v-if="errorMessage">{{ errorMessage }}</p>
+            <p class="errorMessage" v-if="errorMessage">{{ errorMessage }}</p>
 
             <p>
                 <router-link to="/register">Don't have an account? Register Here!</router-link>
@@ -26,7 +26,11 @@
 </template>
 
 <style>
-
+    .errorMessage {
+        color: maroon;
+        font-weight: bold;
+        font-size: 14pt;
+    }
 </style>
 
 <script>

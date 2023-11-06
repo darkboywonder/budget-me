@@ -1,21 +1,10 @@
 <template>
-  <div id = "nav">
-    <ul>
+<TheNavigation/>
 
-      <li>
-        <router-link to="/register"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/newUser.png" height="48" width="48"/>
-          Register</router-link>
-      </li>
-      <li>
-        <router-link to="/login"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/loginimage.png" height="48" width="48"/>
-          Login</router-link>
-      </li>
-    </ul>
-  </div>
   <br>
   <div id="page">
-    <h1>Welcome to Budget Me</h1>
-    <h2>Our budgeting app is designed to help you save money and reach your financial goals!</h2>
+    <h1>You have successfully logged out!</h1>
+    <h2>Please go "Home" to get started with your budget</h2>
     <p>
       To use our app your must register for an account by clicking the register link above or login in  if you have an
       existing account with the login link above. Once you have logged in you will be able to link any accounts you would
@@ -30,6 +19,7 @@
 </style>
 
 <script>
+import TheNavigation from "@/views/TheNavigation.vue";
 export default {
 
         created () {
@@ -40,7 +30,10 @@ export default {
         const response = await fetch("/api/auth/logout", {credentials: 'same-origin'});
         console.log(response);
         },
-        }
+        },
+         components: {
+                    TheNavigation,
+                    },
        }
 
 </script>

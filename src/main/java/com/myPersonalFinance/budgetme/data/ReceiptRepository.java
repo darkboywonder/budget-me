@@ -10,4 +10,5 @@ import java.util.List;
 public interface ReceiptRepository extends JpaRepository<Receipt, Integer> {
 
     List<Receipt> findByCategoryContaining(String tag);
+
 }

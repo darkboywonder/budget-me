@@ -3,6 +3,14 @@
   <br>
   <div id="page">
     <h1>Welcome to Budget Me</h1>
+      <router-link to="/login">
+            <button @click="login">Login Here</button>
+      </router-link>
+      <router-link to="/register">
+            <button @click="register">Register Here</button>
+      </router-link>
+
+
 
     <h2>Choose an account to Link
       <button @click="connectToBank">Link Account</button>

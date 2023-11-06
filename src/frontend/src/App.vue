@@ -1,12 +1,11 @@
 
 <template >
-  <LandingPage/>
+  <TheNavigation/>
   <router-view></router-view>
   <div class="bg"></div>
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
   <div id="page"></div>
-
 
 </template>
 
@@ -15,19 +14,14 @@
 
 .nav-items {
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  vertical-align: text-bottom;
 }
 .link-container {
     display: flex;
     align-items: center;
   }
-.login-link, .register-link, .budget-logo, .logout-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-right: 10px;
-}
+
 .budget-logo img {
     width: 64px
 }
@@ -99,6 +93,7 @@ html {
   li {
     float: left;
     margin-bottom: 5px;
+
 
   }
 

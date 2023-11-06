@@ -34,6 +34,7 @@
                 <label for="category">Category:</label>
                 <select id="category" v-model="expense.category" required>
                     <option value="Loan Payments">Loan Payments</option>
+                    <option value="Cell Phone">Cell Phone</option>
                     <option value="Entertainment">Entertainment</option>
                     <option value="Food and Drink">Food and Drink</option>
                     <option value="General Merchandise">General Merchandise</option>

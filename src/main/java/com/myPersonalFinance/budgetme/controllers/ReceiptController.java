@@ -54,8 +54,19 @@ public class ReceiptController {
                 return ResponseEntity.ok(Arrays.asList(receipt));
             }
         }
-
     }
+
+    @PutMapping(path = "/edit", consumes = "application/json")
+    public ResponseEntity<String> editReceipt(@RequestBody Receipt receipt) {
+        try {
+            receiptRepository.save(receipt);
+            System.out.println(receipt.getAmount());
+            return ResponseEntity.ok("Receipt updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during receipt edit.");
+        }
+    }
+
 
     @PostMapping("/delete")
     public ResponseEntity<List<Receipt>> deleteReceipts(@RequestBody List<Integer> receiptIds) {
@@ -66,10 +77,12 @@ public class ReceiptController {
 
             List<Receipt> updatedReceipts = receiptRepository.findAll();
             return ResponseEntity.ok(updatedReceipts);
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
     @GetMapping("/search")
     public ResponseEntity<List<Receipt>> searchReceiptsByTag(@RequestParam String tag) {
         List<Receipt> matchingReceipts = receiptRepository.findByCategoryContaining(tag);
