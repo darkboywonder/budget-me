@@ -3,7 +3,7 @@ package com.myPersonalFinance.budgetme.models;
 import javax.persistence.*;
 
 
-@Entity
+@Entity //allows instances of this class to be persisted in a relational database
 @Table(name="user")
 public class User {
 
@@ -11,7 +11,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //generate values for primary key
     private int id;
 
-    @Column(nullable=false, unique = true)
+    @Column(nullable=false, unique = true) //cannot be empty and must be unique
     private String username;
     @Column
     private String password;
@@ -28,7 +28,6 @@ public class User {
 
     }
     public String getUsername() {
-
         return username;
     }
 
@@ -42,14 +41,10 @@ public class User {
 
 
     public int getId() {
-
         return id;
     }
 
     public Object getPassword() {
         return password;
     }
-
-
-
 }

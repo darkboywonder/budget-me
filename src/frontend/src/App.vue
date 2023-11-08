@@ -1,17 +1,20 @@
 
 <template >
   <TheNavigation/>
+  <div class="content">
   <router-view></router-view>
   <div class="bg"></div>
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
   <div id="page"></div>
-
+</div>
 </template>
 
 
 <style>
-
+.content {
+    margin-top: 100px;
+}
 .nav-items {
   display: flex;
   justify-content: left;
@@ -150,5 +153,3 @@ export default {
   }
 }
 </script>
-
-

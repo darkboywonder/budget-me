@@ -5,29 +5,36 @@
  <div class="page"></div>
 
       <form @submit.prevent="registerUser">
+
         <h1>Sign Up</h1>
+
         <div>
           <label for="username">Username</label>
           <input v-model="username" type="text" placeholder="Username" />
           <p class="error" v-if="usernameError">{{ usernameError }}</p>
         </div>
+
         <div>
           <label for="password">Password</label>
           <input v-model="password" type="password" placeholder="Password" />
           <p class="error" v-if="passwordError">{{ passwordError }}</p>
         </div>
+
         <div>
           <label for="verifyPassword">Verify Password</label>
           <input v-model="verifyPassword" type="password" placeholder="Verify Password" />
           <p class="error" v-if="verifyError">{{ verifyError }}</p>
         </div>
+
         <button type="submit">Sign Up</button>
+
         <p>
            <router-link to="/login">Already have an account? Login Here!</router-link>
         </p>
+
       </form>
-      </div>
-    </template>
+   </div>
+ </template>
 
 
 <style>
@@ -38,7 +45,7 @@
     }
 </style>
 
-    <script>
+<script>
     export default {
       data() {
         return {

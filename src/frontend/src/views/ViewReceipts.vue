@@ -7,7 +7,9 @@
 
 <div class="search-container">
   <input type="text" v-model="searchTag" placeholder="Search by Category">
+
   <button @click="searchByTag">Search</button>
+
   <br>
   <button @click="clearSearch">Clear Search</button>
 </div>
@@ -24,44 +26,46 @@
             </tr>
 
             <tr v-for="receipt in receipts" :key="receipt.id">
-            <td><input type="checkbox" v-model="receipt.selected"></td>
-            <td>
-                <div v-if=!receipt.isEdit>
-                    {{ receipt.title }}
-                </div>
-                <div v-if=receipt.isEdit>
-                    <input type="text" v-model="receipt.title" required>
-                </div>
-            </td>
-            <td>
-                <div class="tag-container">
-                 <span v-for="tag in receipt.tags" :key="tag" class="tag">{{ tag }}</span>
-                 <div v-if=!receipt.isEdit>
-                     {{ receipt.tag }}
-                 </div>
-                 <div v-if=receipt.isEdit>
-                      <input type="text" v-model="receipt.category" required>
-                 </div>
-                 </div>
-            </td>
 
-            <td>
+        <td><input type="checkbox" v-model="receipt.selected"></td>
+        <td>
+             <div v-if=!receipt.isEdit>
+                    {{ receipt.title }}
+             </div>
+             <div v-if=receipt.isEdit>
+                    <input type="text" v-model="receipt.title" required>
+             </div>
+        </td>
+        <td>
+             <div class="tag-container">
+                 <span v-for="tag in receipt.tags" :key="tag" class="tag">{{ tag }}</span>
+             <div v-if=!receipt.isEdit>
+                     {{ receipt.tag }}
+             </div>
+             <div v-if=receipt.isEdit>
+                      <input type="text" v-model="receipt.category" required>
+             </div>
+             </div>
+        </td>
+
+        <td>
             <div v-if=!receipt.isEdit>
                   ${{ parseFloat(receipt.amount).toFixed(2) }}
             </div>
+
             <div v-if=receipt.isEdit>
                    <input type="number" min="0.00" step="0.01" v-model="receipt.amount" required>
             </div>
-            </td>
-            <td>
+        </td>
+        <td>
             <div v-if=!receipt.isEdit>
                     {{ receipt.date }}
             </div>
             <div v-if=receipt.isEdit>
                      <input type="date" id="date" v-model="receipt.date" required>
             </div>
-            </td>
-            <td>
+        </td>
+        <td>
                 <div v-if=!receipt.isEdit>
                     <button @click="onEdit(receipt)">Edit</button>
                 </div>
@@ -81,33 +85,37 @@
         <br>
 
 
- </div>
- </div>
+        </div>
+    </div>
 </template>
 
 <style>
   .tag-container {
       flex-wrap: wrap;
-    }
+  }
+
   .tag {
       margin-right: 4px;
       padding: 2px 4px;
       background-color: #3490dc;
       color: black;
       border-radius: 4px;
-    }
+  }
+
   table {
-    border: 1px solid;
-    padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+       border: 1px solid;
+       padding: 10px;
+       margin-left: auto;
+       margin-right: auto;
+       text-align: center;
   }
+
   .table-container {
-    display: flex;
-    justify-content: center;
+       display: flex;
+       justify-content: center;
   }
-  .addButton button {
+
+ .addButton button {
        width: 100%;
        margin: auto;
        padding: 10px;
@@ -118,8 +126,9 @@
        cursor: pointer;
        font-size: 16px;
        text-decoration: none;
-        }
-   button {
+  }
+
+  button {
       display: block;
       width: 100%;
       margin: auto;
@@ -131,41 +140,49 @@
       cursor: pointer;
       font-size: 16px;
       text-decoration: none;
-    }
+  }
+
   .deleteBox {
-    color: maroon;
+      color: maroon;
   }
+
   .deleteButton {
-    color: maroon;
+      color: maroon;
 
   }
+
   h1 {
-    text-align: center;
-    font-family:monospace;
-  }
-  th {
-    background-color: rgba(0, 153, 255, 1);;
-    color: white;
-  }
-  th, td {
-    border: 1px solid;
-    padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  td {
-    text-align: center;
-  }
-  tr:nth-child(even) {
-    background-color: #D6EEEE;
-    }
-  tr {
-    border-bottom: 1px solid #ddd;
-  }
-  tr:hover {
-  background-color: rgba(102, 204, 51, 0.5);
+      text-align: center;
+      font-family:monospace;
   }
 
+  th {
+      background-color: rgba(0, 153, 255, 1);;
+      color: white;
+  }
+
+  th, td {
+       border: 1px solid;
+       padding: 10px;
+       margin-left: auto;
+       margin-right: auto;
+  }
+
+  td {
+       text-align: center;
+  }
+
+  tr:nth-child(even) {
+       background-color: #D6EEEE;
+  }
+
+  tr {
+       border-bottom: 1px solid #ddd;
+  }
+
+  tr:hover {
+       background-color: rgba(102, 204, 51, 0.5);
+  }
 </style>
 
 <script>

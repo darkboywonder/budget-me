@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+
 
 
 @RestController
@@ -21,10 +18,10 @@ public class ReceiptController {
 
     @PostMapping(path = "/add", consumes = "application/json")
     public ResponseEntity<String> addReceipts(@RequestBody Receipt receipt) {
-
+    //addReceipt method accepts a parameter 'receipt' of type 'Receipt' received from the request body
         try {
-
             receiptRepository.save(receipt);
+            //saves the 'receipt' object received from the request to the 'receiptRepository'
 
             return ResponseEntity.ok("Receipt added");
 
@@ -36,32 +33,20 @@ public class ReceiptController {
 
     @GetMapping("/view")
     public ResponseEntity<List<Receipt>> viewReceipts(@RequestParam(required = false) Integer receiptId) {
-
-        if (receiptId == null) {
-
+    // returns a ResponseEntity containing a list of 'Receipt' objects
             List<Receipt> allReceipts = receiptRepository.findAll();
+            //retrieve all the 'Receipt' objects from the repository using 'findAll()'
+            //then stores them in the 'allReceipts' list
             return ResponseEntity.ok(allReceipts);
 
-        } else {
-            Optional<Receipt> result = receiptRepository.findById(receiptId);
-            //storing the Optional object that is returned from the data repository when .findById is called
-            if (result.isEmpty()) {
-                return ResponseEntity.notFound().build();
-
-
-            } else {
-                Receipt receipt = result.get();
-                return ResponseEntity.ok(Arrays.asList(receipt));
-            }
-        }
     }
 
     @PutMapping(path = "/edit", consumes = "application/json")
     public ResponseEntity<String> editReceipt(@RequestBody Receipt receipt) {
         try {
             receiptRepository.save(receipt);
-            System.out.println(receipt.getAmount());
             return ResponseEntity.ok("Receipt updated successfully");
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during receipt edit.");
         }

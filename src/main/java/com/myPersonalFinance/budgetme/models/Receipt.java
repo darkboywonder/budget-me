@@ -3,7 +3,7 @@ package com.myPersonalFinance.budgetme.models;
 import javax.persistence.*;
 
 
-@Entity
+@Entity //allows instances of this class to be persisted in a relational database
 @Table(name ="receipt")
 public class Receipt {
 
